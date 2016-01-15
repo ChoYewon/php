@@ -1,4 +1,7 @@
+<!--postResult.php-->
+
 <?php
+   session_start();
    header("Content-Type: text/html; charset=UTF-8");
 
    $name = $_POST['name'];
@@ -19,8 +22,9 @@
 <?php
    if( ($name=="yewon" && $password=="1031") || ($name=="chaewon" && $password=="1030") ) {
 
-      setCookie('isLogin', '1');
-      setCookie('name', $name);
+      #setCookie('isLogin', '1');
+      $_SESSION['isLogin'] = 1;
+      $_SESSION['name'] = $name;
 ?>
       <h2>로그인 성공</h2>
       ID : <?=$name?><br>
@@ -30,8 +34,8 @@
 
    }else{
 
-      setCookie('isLogin', '0');
-      setCookie('name', '');
+      $_SESSION['isLogin'] = 0;
+      $_SESSION['name'] = '';
 ?>
       <h2>로그인 실패</h2>
       아이디 또는 패스워드가 일치하지 않습니다.<br>
