@@ -6,6 +6,8 @@
 
    $name = $_POST['name'];
    $password = $_POST['pw'];
+
+   include('db.php');
 ?>
 
 
@@ -20,6 +22,32 @@
 
 
 <?php
+   //DB 연결
+   $link = mysql_connect($db['host'], $db['user'], $db['pw']);
+   if (!$link) {
+       die('Could not connect: ' . mysql_error());
+   }
+
+   //사용할 DB 선택
+   mysql_select_db($db['db']);
+
+   //SQL문 작성
+   $sql = "select * from members where id='".$name."' and pwd=password('".$password."')";
+   echo $sql;
+
+   $result = mysql_query($sql);
+   $users = mysql_fetch_assoc($result);
+   echo "<pre>";
+   print_r($users);
+   echo "</pre>";
+
+   exit();
+   
+   //DB 실행
+
+   //DB 연결 해제
+   mysql_close($link);
+
    if( ($name=="yewon" && $password=="1031") || ($name=="chaewon" && $password=="1030") ) {
 
       #setCookie('isLogin', '1');
